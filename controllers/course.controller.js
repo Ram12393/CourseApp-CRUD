@@ -1,6 +1,6 @@
 const Courses = require('../models/course.model');
 
-exports.course_details = async (req, res) => {
+exports.allCourse = async (req, res) => {
     try {
         const courses = await Courses.find();
         res.send(courses);
@@ -8,7 +8,7 @@ exports.course_details = async (req, res) => {
         res.send(e)
     }
 }
-exports.single_course = async (req, res) => {
+exports.courseByID = async (req, res) => {
     try {
         const course = await Courses.findById(req.params.id);
         res.send(course);
@@ -29,20 +29,26 @@ exports.update_course = async (req, res) => {
         res.send(e);
     }
 }
-exports.update_course_dynamic = async (req, res) => {
+exports.updateCourseByID = async (req, res) => {
     try {
-        console.log(req.body);
-        // const course = await Courses.findById(req.params.id);
-        // if (!course) res.send('No course found').status(404);
-        // console.log(req.params);
-        // res.send(req.params);
-        // return
-        // course.set({
-        //     author: req.body.author,
-        // });
-        // const result = await course.save();
-        // res.send(result);
+        const course = await Courses.findOneAndUpdate(req.params.id, {
+            $set: req.body
+        }, {
+            new: true
+        });
+        if (!course) res.send('No course found').status(404);
+        const result = await course.save();
+        res.send(result);
     } catch {
         res.send(e);
+    }
+}
+exports.deleteCourseByID = async (req, res) => {
+    try {
+        const course = await Courses.findOneAndDelete(req.body.id);
+        if (!course) res.send('No course -Found');
+        res.send('Delete successfully');
+    } catch (e) {
+        res.send(e)
     }
 }

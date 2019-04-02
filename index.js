@@ -11,12 +11,12 @@ mongoose.connect('mongodb://localhost/playground').then(
 ).catch(err => {
     console.log('connection failed to database');
 })
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use('/v1/api/course', courseRouter);
+
 const port = process.env.port || 3000;
-
-app.use('/v1/api/course',courseRouter);
-app.use(bodyParser.json({ type: '*' }));
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.listen(port, () => {
     console.log(`server is running on port number${port}`);
 })
