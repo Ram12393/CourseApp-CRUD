@@ -1,5 +1,12 @@
 const Courses = require('../models/course.model');
 
+exports.createCourse = async (req, res) => {
+    const course = new Courses(req.body);
+    const result = await course.save();
+    if (!result) res.send('Something went wrong');
+    res.send(result);
+}
+
 exports.allCourse = async (req, res) => {
     try {
         const courses = await Courses.find();
