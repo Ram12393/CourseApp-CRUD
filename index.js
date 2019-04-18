@@ -4,6 +4,8 @@ const app = express();
 var bodyParser = require('body-parser')
 
 const courseRouter = require('./routes/course.route');
+const studentRouter = require('./routes/student.route');
+
 mongoose.connect('mongodb://localhost/playground').then(
     res => {
         console.log('Successfully connected to database');
@@ -13,8 +15,12 @@ mongoose.connect('mongodb://localhost/playground').then(
 })
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
 app.use('/v1/api/course', courseRouter);
+app.use('/v1/api/student', studentRouter);
 
 const port = process.env.port || 3000;
 app.listen(port, () => {
