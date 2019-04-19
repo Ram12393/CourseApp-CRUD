@@ -11,7 +11,12 @@ const studentSchema = new mongoose.Schema({
     },
     course_name: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Course'
+        ref: 'Course'
+        // [
+
+        // {type: mongoose.Schema.Types.ObjectId,
+        // ref: 'Course'}
+        // ],
     },
     address: {
         type: String,
